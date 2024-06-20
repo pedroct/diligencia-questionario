@@ -1,0 +1,206 @@
+<!-- Componentes utilizados
+https://primeng.org/stepper 
+https://primeng.org/selectbutton
+https://primeng.org/editor 
+https://primeng.org/fileupload
+-->
+<div class="card">
+  <p-stepper orientation="vertical">
+    <p-stepperPanel header="Endereço foi localizado?">
+      <ng-template
+        pTemplate="content"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="card justify-content-left">
+          <p-selectButton
+            [options]="stateOptions"
+            [(ngModel)]="value"
+            optionLabel="label"
+            optionValue="value"
+            (click)="showDialog()"
+          />
+        </div>
+        <div class="flex flex-column h-30rem" *ngIf="value==='nao'">
+          <!-- Início Conteúdo -->
+          <div class="card flex-auto">
+            <p-editor [(ngModel)]="text" [style]="{ height: '220px' }" />
+          </div>
+          <!-- Fim Conteúdo -->
+        </div>
+        <div class="flex flex-column h-12rem">
+          <!-- Início Conteúdo -->
+          <p-dialog
+            header="Envio de imagem(s)"
+            [(visible)]="visible"
+            [modal]="true"
+            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+            [style]="{ width: '70vw' }"
+            [draggable]="false"
+            [resizable]="true"
+          >
+            <div class="card flex-auto justify-content-center">
+              <p-toast />
+              <p-fileUpload
+                name="demo[]"
+                url="https://www.primefaces.org/cdn/api/upload.php"
+                (onUpload)="onUpload($event)"
+                [multiple]="true"
+                accept="image/*"
+                maxFileSize="1000000"
+                chooseLabel="Selecionar"
+                uploadLabel="Enviar"
+                cancelLabel="Cancelar"
+              >
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">
+                      {{ file.name }} - {{ file.size }} bytes
+                    </li>
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
+            </div>
+          </p-dialog>
+          <!-- Fim Conteúdo -->
+        </div>
+        <div class="flex py-4">
+          <p-button label="Próxima" (onClick)="nextCallback.emit()" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel
+      header="A Diligência foi acompanhada por alguém da empresa?"
+    >
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="card justify-content-left">
+          <p-selectButton
+            [options]="stateOptions"
+            [(ngModel)]="value"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+        <div class="flex flex-column h-22rem">
+          <!-- Início Conteúdo -->
+          <div class="card flex-auto">
+            <p-editor [(ngModel)]="text" [style]="{ height: '220px' }" />
+          </div>
+          <!-- Fim Conteúdo -->
+        </div>
+        <div class="flex py-4 gap-2">
+          <p-button
+            label="Anterior"
+            severity="secondary"
+            (onClick)="prevCallback.emit()"
+          />
+          <p-button label="Próxima" (onClick)="nextCallback.emit()" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel header="A empresa funciona no local?">
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="card justify-content-left">
+          <p-selectButton
+            [options]="stateOptions"
+            [(ngModel)]="value"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+        <div class="flex flex-column h-12rem">
+          <div
+            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
+          >
+            Content II
+          </div>
+        </div>
+        <div class="flex py-4 gap-2">
+          <p-button
+            label="Anterior"
+            severity="secondary"
+            (onClick)="prevCallback.emit()"
+          />
+          <p-button label="Próxima" (onClick)="nextCallback.emit()" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel
+      header="A atividade principal que a empresa exerce no local, é compatível com a CNAE principal?"
+    >
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="card flex justify-content-left">
+          <p-selectButton
+            [options]="stateOptions"
+            [(ngModel)]="value"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+        <div class="flex flex-column h-12rem">
+          <div
+            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
+          >
+            Content II
+          </div>
+        </div>
+        <div class="flex py-4 gap-2">
+          <p-button
+            label="Anterior"
+            severity="secondary"
+            (onClick)="prevCallback.emit()"
+          />
+          <p-button label="Próxima" (onClick)="nextCallback.emit()" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel
+      header="A atividade principal que a empresa exerce no local, é compatível com a CNAE secundária?"
+    >
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-index="index"
+      >
+        <div class="card justify-content-left">
+          <p-selectButton
+            [options]="stateOptions"
+            [(ngModel)]="value"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+        <div class="flex flex-column h-12rem">
+          <div
+            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
+          >
+            Content III
+          </div>
+        </div>
+        <div class="flex py-4 gap-2">
+          <p-button
+            label="Anterior"
+            severity="secondary"
+            (onClick)="prevCallback.emit()"
+          />
+          <p-button label="Finalizar" (onClick)="nextCallback.emit()" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+</div>
